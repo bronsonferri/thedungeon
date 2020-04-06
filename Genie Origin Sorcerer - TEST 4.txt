@@ -1,0 +1,100 @@
+var iFileName = "Genie Origin Sorcerer.js";
+RequiredSheetVersion(12.999);
+
+AddSubClass("sorcerer", "Genie Origin", {
+	regExpSearch : /^(?=.*(sorcerer|witch))(?=.*genie?).*$/i,
+	subname : "Genie Origin",
+	source : ["HB", 0],
+	features : {
+		"subclassfeature1" : {
+			name : "Genie Blood",
+			source : ["HB", 0],
+			minlevel : 1,
+			description : "\n   " + "Choose a Genie Ancestor using the \"Choose Feature\" button above" + "\n   " + "You gain a feature based upon your genie ancestor. The Genie Blood feature can be used twice. You regain all expended uses when you finish a short or long rest.",
+			choices : ["Dao", "Djinn", "Efreeti", "Marid"],
+			"dao" : {
+				name : "Dao",
+				description : "\n   " + "I have genie ancestry from the Dao, who are affiliated with earth" + "\n   " + "Dao's Hardening. You may use your reaction to give an attack made against you or a friendly creature within 10 feet of you gain disadvantage.",
+				eval : "var ToAdd = ['sorcerer', 'subclassfeature14', 'earth']; if (classes.known.sorcerer.level >= 14 && What('Class Features Remember').indexOf(ToAdd.toString()) === -1) {ClassFeatureOptions(ToAdd)}; ToAdd[1] = 'subclassfeature14';"
+			},
+			"djinn" : {
+				name : "Djinn",
+				description : "\n   " + "I have genie ancestry from the Djinni who are affiliated with air" + "\n   " + "Djinn's Agility. Until the end of your turn, you may ignore difficult terrain, increase your base momvement speed by 10 feet, and disengage as a bonus action.",
+				action : ["bonus action", "'s Agility"],
+				eval : "var ToAdd = ['sorcerer', 'subclassfeature14', 'air']; if (classes.known.sorcerer.level >= 14 && What('Class Features Remember').indexOf(ToAdd.toString()) === -1) {ClassFeatureOptions(ToAdd)}; ToAdd[1] = 'subclassfeature14';"
+			},
+			"efreeti" : {
+				name : "Efreeti",
+				description : "\n   " + "I have genie ancestry from the Efreeti who are affiliated with fire" + "\n   " + "Efreeti's Speed. You may dash as a bonus action. Opportunity attacks made against you while dashing this way are done so with disadvantage.",
+				eval : "var ToAdd = ['sorcerer', 'subclassfeature14', 'fire']; if (classes.known.sorcerer.level >= 14 && What('Class Features Remember').indexOf(ToAdd.toString()) === -1) {ClassFeatureOptions(ToAdd)}; ToAdd[1] = 'subclassfeature14';"
+			},
+			"marid" : {
+				name : "Marid",
+				description : "\n   " + "I have genie ancestry from the Marid, who are affiliated with water" + "\n   " + "Marid's Trickery. You may use a bonus action to give the next attack that you or your allies make before the start of your next turn advantage. The target must be a creature within 15 feet of you that you can see.",
+				eval : "var ToAdd = ['sorcerer', 'subclassfeature14', 'water']; if (classes.known.sorcerer.level >= 14 && What('Class Features Remember').indexOf(ToAdd.toString()) === -1) {ClassFeatureOptions(ToAdd)}; ToAdd[1] = 'subclassfeature14';"
+
+			},
+			languageProfs : ["Primordial"]
+		},
+		"subclassfeature1.1" : {
+			name : "Mystical Nature",
+			source : ["HB", 0],
+			minlevel : 1,
+			description : "\n   " + "I am proficient with the Persuasion or Deception skill, and one martial weapon of my choice." + "\n   " + "When I make an ability check or saving throw, I may gain advantage on this roll. I can use this feature a number of times equal to my charisma modifier. I regain all expended uses when I finish a long rest.",
+		},
+		"subclassfeature6" : {
+			name : "Improved Font of Magic",
+			source : ["HB", 0],
+			minlevel : 6,
+			description : "\n   " + "Elemental Defense. As a reaction, I may spend 3 sorcery points and gain resistance against one type of damage until the start of my next turn." + "\n   " + "Genie Vitality. When I cast a spell of 1st level or higher, I may use a bonus action and expend 3 sorcery points to gain temporary hit points. I gain temporary hit points equal to my constitution modifier, a minimum of 1, times my sorcerer level. While I have temporary hit points created by this feature, my AC increases by 1, and I become resistant to bludgeoning, piercing, and slashing damage. I do not gain these additional benefits if I am wearing armor. If I spend sorcery points or cast spells while this ability is active, I gain additional temporary hit points equal to twice the spent sorcery points or equal to the spell's level. Temporary hit points gained via this ability vanish one minute after the activation. Once I use this feature, I can't use it again until I finish a short or long rest." + "\n   " + "While this benefit is active, I am surrounded by elemental energy and minot visual effects related to my genie ancestry, such as wind or stone-looking skin." + "\n   " + "Improved Conversion of Spell Slots into Sorcery Points. The first time I convert spell slots into sorcery points after taking a short or long rest, I generate 1 additional sorcery point. I can't benefit from this feature again until I finish a short or long rest." + "\n   " + "Martial Casting. When I cast a spell, I may spend 1 sorcery point to make a melee weapon attack as a bonus action. If I hit, my weapon is considered to be magical.",
+			action : ["reaction", " Elemental Defense"],
+		},
+		"subclassfeature6.1" : {
+			name : "Favored Metamagic",
+			source : ["HB", 0],
+			minlevel : 6,
+			description : "\n   " + "Choose one of the metamagic abilities I have. I cannot change this selection later. When I use this feature, halve the sorcery point cost (rounded up). Once you use this feature, you cannot use it again until you finish a short or long rest. This benefit will be applied to a second metamagic feat at 14th level. A spell cast this way is visually different, for it takes an appearence based on the genie ancestry of the caster. For example, a fireball cast by a Marid descendent may appear as a ball of boiling water. It may appear as a ball of molten lava if cast by a Dao descendent. No additional effects, other than sensorial ones, are granted by this feature.",
+		},
+		"subclassfeature14" : {
+			name : "Genie Mobility",
+			source : ["HB", 0],
+			minlevel : 14,
+			description : "\n   " + "I gain additional mobility according to my genie ancestry",
+			choices : ["dao", "djinn", "efreeti", "marid"],
+			choicesNotInMenu : true,
+			"dao" : {
+				name : "Dao Mobility",
+				description : "\n   " + "I gain a burrow speed of 20 feet.",
+				speed : { burrow : { spd : "20", enc : "20" } }
+			},
+			"djinn" : {
+				name : "Djinn Mobility",
+				description : "\n   " + "I gain a fly speed of 25 feet.",
+				speed : { fly : { spd : 30, enc : 20 } },
+			},
+			"efreeti" : {
+				name : "Efreeti Mobility",
+				description : "\n   " + "My base walking speed increases by 20 feet.",
+				speed : { walk : { spd : "walk + 20", enc : "walk + 20" } }
+			},
+			"marid" : {
+				name : "Marid Mobility",
+				description : "\n   " + "I gain a swim speed of 30 feet.",
+				speed : { swim : { spd : "30", enc : "30" } }
+			},
+			eval : "if (FeaChoice === '') {var CFrem = What('Class Features Remember'); var tReg = /.*?sorcerer,subclassfeature1,(dao|djinn|efreeti|marid).*/i; if ((tReg).test(CFrem)) {FeaChoice = CFrem.replace(tReg, '$1'); AddString('Class Features Remember', 'sorcerer,subclassfeature14,' + FeaChoice, false);};};"
+		},
+		"subclassfeature14.1" : {
+			name : "Improved Spell Conversion",
+			source : ["HB", 0],
+			minlevel : 14,
+			description : "\n   " + "I can now create spell slots up to 7th level." + "\n   " + "Any spell slots created vanish at the end of a long rest." + "\n   " + "Spell Slot Level		Sorcery Point Cost" + "\n   " + "	1st			2" + "\n   " + "	2nd			3" + "\n   " + "	3rd			5" + "\n   " + "	4th			6" + "\n   " + "	5th			7" + "\n   " + "	6th			9" + "\n   " + "	7th			11",
+		},
+		"subclassfeature18" : {
+			name : "Pulsing Magic",
+			source : ["HB", 0],
+			minlevel : 18,
+			description : "\n   " + "When I roll initiative, I regain one spent sorcery point.",
+		}
+	}
+});
